@@ -310,3 +310,7 @@ function getRiskLevel(score) {
     return 'low';
 }
 
+// Redirect to Check Alerts Page
+function redirectToAlerts() {
+    window.location.href = 'check_alert.html';
+}
