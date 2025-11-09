@@ -276,14 +276,29 @@
     </div>
 
     <script>
+        function redirectToLearning() {
+    console.log('Learn Safety button clicked');
+    
+    // Test if learning.html exists
+    fetch('learning.html')
+        .then(response => {
+            if (response.ok) {
+                console.log('learning.html found - redirecting...');
+                window.location.href = 'learning.html';
+            } else {
+                console.log('learning.html not found - status:', response.status);
+                alert('❌ learning.html file not found! Please make sure it exists in your repository.');
+            }
+        })
+        .catch(error => {
+            console.log('Error fetching learning.html:', error);
+            alert('❌ Error: learning.html file not found or inaccessible!');
+        });
+}
         // Redirect functions
         function redirectToAnalysis() {
             window.location.href = 'url-analysis-dashboard.html';
         }
-function redirectToLearning() {
-    // Try the most common filename first
-    window.location.href = 'learning.html';
-}
         function showAlerts() {
             alert('🔔 No new critical alerts at this time.');
         }
@@ -365,4 +380,5 @@ function redirectToLearning() {
     </script>
 </body>
 </html>
+
 
