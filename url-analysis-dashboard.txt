@@ -247,6 +247,17 @@
     </style>
 </head>
 <body>
+<body>
+    <!-- Add this back button at the top -->
+    <div style="max-width: 1200px; margin: 0 auto 20px auto;">
+        <button onclick="window.location.href='index.html'" 
+                style="background: #667eea; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-weight: 600;">
+            ← Back to Dashboard
+        </button>
+    </div>
+
+    <div class="container">
+        <!-- rest of your existing code -->
     <div class="container">
         <header>
             <h1>ML-Powered Bulk URL Analysis</h1>
