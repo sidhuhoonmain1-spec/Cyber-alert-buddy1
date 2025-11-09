@@ -276,24 +276,44 @@
     </div>
 
     <script>
-        function redirectToLearning() {
-    window.location.href = 'learning.html';
+      function redirectToLearning() {
+    console.log('Learn Safety button clicked');
     
-    // Test if learning.html exists
-    fetch('learning.html')
-        .then(response => {
-            if (response.ok) {
-                console.log('learning.html found - redirecting...');
-                window.location.href = 'learning.html';
-            } else {
-                console.log('learning.html not found - status:', response.status);
-                alert('❌ learning.html file not found! Please make sure it exists in your repository.');
-            }
-        })
-        .catch(error => {
-            console.log('Error fetching learning.html:', error);
-            alert('❌ Error: learning.html file not found or inaccessible!');
-        });
+    // Test multiple possible issues
+    const testUrls = [
+        'learning.html',
+        './learning.html',
+        '/learning.html'
+    ];
+    
+    let found = false;
+    
+    testUrls.forEach(url => {
+        fetch(url)
+            .then(response => {
+                if (response.ok && !found) {
+                    console.log(`✅ Found at: ${url}`);
+                    found = true;
+                    window.location.href = url;
+                }
+            })
+            .catch(error => {
+                console.log(`❌ Not found at: ${url}`, error);
+            });
+    });
+    
+    // If not found after 2 seconds, show error
+    setTimeout(() => {
+        if (!found) {
+            const errorMsg = `Learning portal not found! 
+Current files in directory: 
+- index.html
+- learning.html
+- Strong_Password.html
+- etc...`;
+            alert(errorMsg);
+        }
+    }, 2000);
 }
         // Redirect functions
         function redirectToAnalysis() {
@@ -380,6 +400,7 @@
     </script>
 </body>
 </html>
+
 
 
 
