@@ -234,24 +234,26 @@
                 </div>
             </div>
             
-            <div class="quick-actions">
-                <button class="action-btn report" onclick="window.open('https://cybercrime.gov.in/Webform/Crime_AuthoLogin.aspx', '_blank')">
-                    🚨 Report Scam
-                </button>
-                <button class="action-btn quiz" onclick="window.open('https://form.jotform.com/252956155106458', '_blank')">
-                    🧠 Take Quiz
-                </button>
-                <button class="action-btn alerts" onclick="redirectToAlerts()">
-    ⚡ Check Alerts
-</button>
-                <button class="action-btn" onclick="redirectToAnalysis()">
-                    📊 Get Analysis
-                </button>
-                <button class="action-btn learning" onclick="redirectToLearning()">
-                    📚 Learn Safety
-                </button>
-            </div>
-
+         <div class="quick-actions">
+    <!-- These use onclick for external links -->
+    <button class="action-btn report" onclick="window.open('https://cybercrime.gov.in/Webform/Crime_AuthoLogin.aspx', '_blank')">
+        🚨 Report Scam
+    </button>
+    <button class="action-btn quiz" onclick="window.open('https://form.jotform.com/252956155106458', '_blank')">
+        🧠 Take Quiz
+    </button>
+    
+    <!-- These use direct href for internal pages -->
+    <a href="check_alert.html" class="action-btn alerts">
+        ⚡ Check Alerts
+    </a>
+    <a href="url-analysis-dashboard.html" class="action-btn">
+        📊 Get Analysis
+    </a>
+    <a href="learning.html" class="action-btn learning">
+        📚 Learn Safety
+    </a>
+</div>
             <section class="fraud-detection-section">
                 <div id="accuracy-display"></div>
                 
@@ -361,6 +363,7 @@
     </script>
 </body>
 </html>
+
 
 
 
