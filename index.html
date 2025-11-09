@@ -505,7 +505,7 @@ function redirectToLearning() {
         </div>
     </div>
 
-    <script>
+      <script>
         // Global variable to hold all data after fetching
         window.allAlerts = []; 
 
@@ -529,11 +529,14 @@ function redirectToLearning() {
             });
         });
 
-        // Scroll to URL Check section
-        function scrollToURL() {
-            document.getElementById('urlCheckSection').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
+        // Redirect to URL Analysis Dashboard
+        function redirectToAnalysis() {
+            window.location.href = 'url-analysis-dashboard.html';
+        }
+
+        // Redirect to Learning Page
+        function redirectToLearning() {
+            window.location.href = 'learning.html';
         }
 
         // Show alerts (simple implementation)
@@ -567,23 +570,8 @@ function redirectToLearning() {
             setTimeout(() => {
                 const analysis = analyzeURL(url);
                 displayResult(analysis, resultArea);
-                saveToSearchHistory(url, analysis);
             }, 2000);
         }
-        <!-- Recent URL Searches Section -->
-<div class="search-history-section">
-    <div class="search-history-header">
-        <h3>📋 Recent URL Searches</h3>
-        <button class="clear-history-btn" onclick="clearSearchHistory()">
-            🗑️ Clear History
-        </button>
-    </div>
-    <div class="search-history-list" id="searchHistory">
-        <div class="search-history-item">
-            <div class="search-url">No searches yet. Check a URL to see history here.</div>
-        </div>
-    </div>
-</div>
 
         // URL Analysis Logic
         function analyzeURL(url) {
@@ -682,15 +670,20 @@ function redirectToLearning() {
         }
 
         // --------------------------------------------------------------
-        // CORE DETECTION AND DISPLAY LOGIC
+        // CORE DETECTION AND DISPLAY LOGIC - FIXED VERSION
         // --------------------------------------------------------------
 
         async function fetchAndAnalyzeAlerts() {
             const alertsContainer = document.getElementById('alerts-container');
+            if (!alertsContainer) {
+                console.log('Fraud detection container not found');
+                return;
+            }
+            
             alertsContainer.innerHTML = '<p style="text-align:center;">Analyzing data with detection engine...</p>';
 
             try {
-                // Simulate the Netlify function call with your rule-based detection
+                // Use local simulation
                 const analyzedData = await simulateNetlifyFunction();
                 
                 window.allAlerts = analyzedData; // Save all data
@@ -703,63 +696,69 @@ function redirectToLearning() {
                 }
 
             } catch (error) {
-                console.error("Error fetching/analyzing alerts:", error);
-                alertsContainer.innerHTML = '<p style="text-align:center; color: red;">Error: Could not connect to Detection Engine.</p>';
+                console.error("Error in fraud detection:", error);
+                alertsContainer.innerHTML = '<p style="text-align:center; color: red;">Error loading detection engine.</p>';
             }
         }
 
-        // Simulate your Netlify function
+        // Simulate Netlify function locally
         function simulateNetlifyFunction() {
-            const rawData = [
-                { id: 1, type: "Phishing", keywords: "urgent password reset", url: "http://bank-login.xyz", location: "Mumbai" },
-                { id: 2, type: "General Inquiry", keywords: "checking my account balance", url: "", location: "Delhi" },
-                { id: 3, type: "Investment Fraud", keywords: "guaranteed 50% profit daily", url: "http://cryptogold.online", location: "Bangalore" },
-                { id: 4, type: "Tech Support Scam", keywords: "windows license expired call now", url: "", location: "Pune" },
-                { id: 5, type: "Phishing", keywords: "your account will be closed soon", url: "https://support-login-secure.com", location: "Chennai" },
-                { id: 6, type: "Genuine Report", keywords: "looking for banking hours", url: "", location: "Kolkata" }
-            ];
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const rawData = [
+                        { id: 1, type: "Phishing", keywords: "urgent password reset", url: "http://bank-login.xyz", location: "Mumbai" },
+                        { id: 2, type: "General Inquiry", keywords: "checking my account balance", url: "", location: "Delhi" },
+                        { id: 3, type: "Investment Fraud", keywords: "guaranteed 50% profit daily", url: "http://cryptogold.online", location: "Bangalore" },
+                        { id: 4, type: "Tech Support Scam", keywords: "windows license expired call now", url: "", location: "Pune" },
+                        { id: 5, type: "Phishing", keywords: "your account will be closed soon", url: "https://support-login-secure.com", location: "Chennai" },
+                        { id: 6, type: "Genuine Report", keywords: "looking for banking hours", url: "", location: "Kolkata" }
+                    ];
 
-            const analyzedAlerts = rawData.map(alert => {
-                let fraudScore = 0;
+                    const analyzedAlerts = rawData.map(alert => {
+                        let fraudScore = 0;
 
-                // Rule A: HIGH-RISK TYPE (40 points)
-                if (alert.type.includes('Phishing') || alert.type.includes('Investment')) {
-                    fraudScore += 40;
-                }
+                        // Rule A: HIGH-RISK TYPE (40 points)
+                        if (alert.type.includes('Phishing') || alert.type.includes('Investment')) {
+                            fraudScore += 40;
+                        }
 
-                // Rule B: CRITICAL URGENCY/MONEY KEYWORDS (30 points)
-                const criticalKeywords = ['password', 'guaranteed', 'urgent', 'profit', 'expired', 'deposit', 'verify'];
-                if (criticalKeywords.some(keyword => alert.keywords.toLowerCase().includes(keyword))) {
-                    fraudScore += 30;
-                }
+                        // Rule B: CRITICAL URGENCY/MONEY KEYWORDS (30 points)
+                        const criticalKeywords = ['password', 'guaranteed', 'urgent', 'profit', 'expired', 'deposit', 'verify'];
+                        if (criticalKeywords.some(keyword => alert.keywords.toLowerCase().includes(keyword))) {
+                            fraudScore += 30;
+                        }
 
-                // Rule C: SUSPICIOUS URL DOMAIN (20 points)
-                if (alert.url.includes('.xyz') || alert.url.includes('.online') || alert.url.includes('secure-login-')) {
-                    fraudScore += 20;
-                }
-                
-                // Rule D: Tech Support Language (10 points)
-                if (alert.type.includes('Tech Support') || alert.keywords.includes('call now')) {
-                    fraudScore += 10;
-                }
+                        // Rule C: SUSPICIOUS URL DOMAIN (20 points)
+                        if (alert.url && (alert.url.includes('.xyz') || alert.url.includes('.online') || alert.url.includes('secure-login-'))) {
+                            fraudScore += 20;
+                        }
+                        
+                        // Rule D: Tech Support Language (10 points)
+                        if (alert.type.includes('Tech Support') || alert.keywords.includes('call now')) {
+                            fraudScore += 10;
+                        }
 
-                // Calculate Final Status and Confidence Score
-                const isFraud = fraudScore >= 50;
-                const confidence = Math.min(100, fraudScore + 5);
+                        // Calculate Final Status and Confidence Score
+                        const is_fraud = fraudScore >= 50;
+                        const confidence_score = Math.min(100, fraudScore + 5);
 
-                return {
-                    ...alert,
-                    is_fraud: isFraud,
-                    confidence_score: confidence,
-                    system_accuracy: 90.1 
-                };
+                        return {
+                            ...alert,
+                            is_fraud: is_fraud,
+                            confidence_score: confidence_score,
+                            system_accuracy: 90.1 
+                        };
+                    });
+
+                    resolve(analyzedAlerts);
+                }, 1500);
             });
-
-            return analyzedAlerts;
         }
 
         function renderAlerts(alerts) {
             const alertsContainer = document.getElementById('alerts-container');
+            if (!alertsContainer) return;
+            
             alertsContainer.innerHTML = ''; 
 
             if (alerts.length === 0) {
@@ -807,6 +806,9 @@ function redirectToLearning() {
 
         // Function to display the required overall accuracy number
         function displayAccuracyMeter(accuracy) {
+            const accuracyDisplay = document.getElementById('accuracy-display');
+            if (!accuracyDisplay) return;
+            
             const meterHTML = `
                 <div class="accuracy-meter-box">
                     <h3 style="margin: 0 0 10px 0; color: #2d3748;">System Performance</h3>
@@ -814,32 +816,15 @@ function redirectToLearning() {
                     <p style="margin: 5px 0 0 0; color: #718096; font-size: 0.9em;">(Based on Rule-Engine evaluation against synthetic data)</p>
                 </div>
             `;
-            document.getElementById('accuracy-display').innerHTML = meterHTML;
+            accuracyDisplay.innerHTML = meterHTML;
         }
 
-        // Initialize stats animation
-        function animateStats() {
-            let scans = 0;
-            let threats = 0;
-            const scanElement = document.getElementById('totalScans');
-            const threatElement = document.getElementById('threatsBlocked');
-            
-            const interval = setInterval(() => {
-                scans += Math.floor(Math.random() * 5) + 1;
-                threats += Math.floor(Math.random() * 2);
-                
-                if (scanElement) scanElement.textContent = scans;
-                if (threatElement) threatElement.textContent = threats;
-                
-                if (scans > 1000) clearInterval(interval);
-            }, 100);
-        }
-        
-        // Start animation when page loads
-        window.addEventListener('load', animateStats);
+        // Remove duplicate button and fix Quick Actions section
+        // Also remove the scrollToURL function since we don't need it anymore
     </script>
 </body>
 </html>
+
 
 
 
