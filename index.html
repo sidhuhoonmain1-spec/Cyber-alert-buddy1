@@ -276,46 +276,7 @@
     </div>
 
     <script>
-      function redirectToLearning() {
-    console.log('Learn Safety button clicked');
-    
-    // Test multiple possible issues
-    const testUrls = [
-        'learning.html',
-        './learning.html',
-        '/learning.html'
-    ];
-    
-    let found = false;
-    
-    testUrls.forEach(url => {
-        fetch(url)
-            .then(response => {
-                if (response.ok && !found) {
-                    console.log(`✅ Found at: ${url}`);
-                    found = true;
-                    window.location.href = url;
-                }
-            })
-            .catch(error => {
-                console.log(`❌ Not found at: ${url}`, error);
-            });
-    });
-    
-    // If not found after 2 seconds, show error
-    setTimeout(() => {
-        if (!found) {
-            const errorMsg = `Learning portal not found! 
-Current files in directory: 
-- index.html
-- learning.html
-- Strong_Password.html
-- etc...`;
-            alert(errorMsg);
-        }
-    }, 2000);
-}
-        // Redirect functions
+         // Redirect functions
         function redirectToAnalysis() {
             window.location.href = 'url-analysis-dashboard.html';
         }
@@ -400,6 +361,7 @@ Current files in directory:
     </script>
 </body>
 </html>
+
 
 
 
