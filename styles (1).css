@@ -257,7 +257,45 @@ body {
     font-size: 12px;
     opacity: 0.8;
 }
+.quick-actions a {
+    text-decoration: none;
+    display: block;
+}
 
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #667eea;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.1em;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    background: #5a67d8;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+}
+
+.action-btn.report {
+    background: #e53e3e;
+}
+
+.action-btn.quiz {
+    background: #38a169;
+}
+
+.action-btn.alerts {
+    background: #d69e2e;
+}
 .quick-actions .red-bg { background-color: var(--red); }
 .quick-actions .green-bg { background-color: var(--green); }
 .quick-actions .yellow-bg { background-color: var(--yellow); color: var(--text-dark); }
@@ -657,4 +695,6 @@ body {
 .matrix-fp { background: #fed7d7; color: #742a2a; }
 .matrix-tn { background: #c6f6d5; color: #22543d; }
 .matrix-fn { background: #fed7d7; color: #742a2a; }
+
+
 
